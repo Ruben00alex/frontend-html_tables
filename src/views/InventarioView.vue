@@ -1,7 +1,7 @@
 <!-- eslint-disable prettier/prettier -->
 
 <template>
-    <div class="centered-div ">
+    <div class="centered">
         <h1><b> Inventario </b></h1>
         <InventarioTable />
     </div>
