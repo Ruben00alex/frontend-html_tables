@@ -1,21 +1,29 @@
 <!-- eslint-disable prettier/prettier -->
 
 <template>
-    <div class="inventarioTable">
+    <div class="centered-div ">
         <h1><b> Inventario </b></h1>
-        <p id="tablaInventario">
-        </p>
+        <InventarioTable />
     </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import IT from "@/components/InventarioTable.vue";
-
+import InventarioTable from "../components/InventarioTable.vue";
 export default {
     name: "InventarioView",
     components: {
-        IT,
+        InventarioTable,
     },
 };
 </script>
+
+<style scoped>
+.centered-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+}
+</style>
