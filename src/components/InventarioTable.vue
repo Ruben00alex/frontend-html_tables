@@ -1,7 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
     <div class="col-md-16">
-        <h1><b> Inventario </b></h1>
         <p id="tablaInventario">
         </p>
     </div>
@@ -11,12 +10,14 @@
 import axios from "axios";
 export default {
 
-
-    name: "InventarioTable",
+    name: "inventario",
+    props: {
+        msg: String,
+    },
     created() {
+        console.log("InventarioTable created");
         axios.get("http://localhost:8080/api/inventario").then((result) => {
             let datosProductos = result.data;
-            //Aqui se crea la tabla
             let tablaProductos = document.getElementById("tablaInventario");
             let tabla = document.createElement("table");
             let thead = document.createElement("thead");
