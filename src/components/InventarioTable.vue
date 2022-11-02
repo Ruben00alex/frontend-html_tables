@@ -44,7 +44,6 @@ export default {
             thead.appendChild(tr);
             tabla.appendChild(thead);
             tablaProductos.appendChild(tabla);
-            //add data from datosProductos to table
             for (let i = 0; i < datosProductos.length; i++) {
                 let tr = document.createElement("tr");
                 let tdSku = document.createElement("td");

@@ -1,7 +1,6 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
   <div class="col-md-16">
-    <h1><b> Productos </b></h1>
     <p id="tablaProductos">
     </p>
   </div>
@@ -11,10 +10,7 @@
 import axios from "axios";
 export default {
 
-  name: "HelloWorld",
-  props: {
-    msg: String,
-  },
+  name: "ProductosTable",
   created() {
     axios.get("http://localhost:8080/api/productos").then((result) => {
       let datosProductos = result.data;
