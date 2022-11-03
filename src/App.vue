@@ -9,6 +9,22 @@
 </template>
 
 <style>
+table,
+th,
+td {
+  border: 1px solid rgb(8, 0, 255);
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #aa0476;
+  color: white;
+}
+
+
 .centered {
   position: fixed;
   top: 25%;
