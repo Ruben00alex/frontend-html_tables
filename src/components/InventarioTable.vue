@@ -12,7 +12,7 @@ export default {
 
     name: "inventario",
     props: {
-        msg: String,
+
     },
     created() {
         console.log("InventarioTable created");
