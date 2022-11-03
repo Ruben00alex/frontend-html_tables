@@ -1,9 +1,9 @@
 <template>
-
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/productos">Productos</router-link> |
-    <router-link to="/inventario">Inventario</router-link>
+    <router-link to="/inventario">Inventario</router-link> |
+    <router-link to="/clientes">Clientes</router-link>
   </nav>
   <router-view />
 </template>
@@ -12,6 +12,7 @@
 table,
 th,
 td {
+
   border: 1px solid rgb(8, 0, 255);
 }
 
@@ -19,11 +20,22 @@ table {
   border-collapse: collapse;
 }
 
+td {
+
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  font-size: 1.2em;
+
+
+  text-align: left;
+  padding: 5px;
+  text-align: left;
+}
+
 th {
   background-color: #aa0476;
   color: white;
 }
-
 
 .centered {
   position: fixed;
