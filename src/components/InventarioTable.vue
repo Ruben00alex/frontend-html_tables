@@ -1,16 +1,16 @@
 <!-- eslint-disable prettier/prettier -->
 <template>
-    <div class="col-md-16">
+    <div class="">
         <p id="tablaInventario">
         </p>
     </div>
 </template>
-  
+
 <script lang="js">
 import axios from "axios";
 export default {
 
-    name: "inventario",
+    name: "myInventario",
     props: {
 
     },
