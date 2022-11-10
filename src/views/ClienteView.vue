@@ -19,10 +19,5 @@ export default {
 </script>
 
 <style scoped>
-.centered-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+
 </style>

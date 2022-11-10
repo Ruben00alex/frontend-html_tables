@@ -12,40 +12,73 @@
 table,
 th,
 td {
+  padding: 10px;
+  text-align: center;
+}
 
-  border: 1px solid rgb(8, 0, 255);
+tr:last-of-type {
+  border-bottom: 2px solid #009884;
+}
+
+body {
+  background: linear-gradient(90deg, #d69bd2 30%, #97d9e1 100%);
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  color: rgb(237, 236, 236);
+  text-align: center;
 }
 
 table {
+
   border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 td {
 
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
   font-size: 1.2em;
 
+  padding: 12px 15px;
+  text-align: center;
+}
 
-  text-align: left;
-  padding: 5px;
-  text-align: left;
+/* Zebra striping td */
+tr:nth-of-type(odd) {
+  background: #f3f3f3;
+}
+
+tr:nth-of-type(even) {
+  /* green background:*/
+  background: #dddddd;
+  color: #000000;
+
 }
 
 th {
-  background-color: #aa0476;
-  color: white;
+
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
 }
 
 .centered {
-  position: fixed;
+  position: absolute;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -53,7 +86,7 @@ th {
 }
 
 nav {
-  padding: 30px;
+  padding: 15px;
 }
 
 nav a {
