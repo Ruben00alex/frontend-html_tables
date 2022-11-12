@@ -1,14 +1,53 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/productos">Productos</router-link> |
-    <router-link to="/inventario">Inventario</router-link> |
-    <router-link to="/clientes">Clientes</router-link>
-  </nav>
-  <router-view />
+  <div class="navBar">
+    <nav>
+      <router-link to="/">Inicio</router-link>
+      <router-link to="/productos">Productos</router-link>
+      <router-link to="/inventario">Inventario</router-link>
+      <router-link to="/clientes">Clientes</router-link>
+    </nav>
+  </div>
+
+  <div>
+    <router-view />
+  </div>
+
 </template>
 
 <style>
+.inputProduct {
+  /* grid with 2 columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  column-gap: 1rem;
+  row-gap: 1rem;
+  padding: 1rem;
+
+  align-items: center;
+
+  justify-items: center;
+
+  align-content: center;
+
+  justify-content: center;
+
+  background-color: #f1f1f1;
+
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1rem;
+  padding: 1.3rem;
+  border-radius: 0.5rem;
+}
+
+.navBar {
+  position: relative;
+
+  overflow: hidden;
+  width: auto;
+  margin: 1rem auto;
+}
+
 table,
 th,
 td {
@@ -20,14 +59,23 @@ tr:last-of-type {
   border-bottom: 2px solid #009884;
 }
 
+html {
+
+  background: linear-gradient(to bottom right, #fc00eb 10%, #00dbde 100%);
+  background-size: cover;
+  min-height: 100%;
+
+}
+
 body {
-  background: linear-gradient(90deg, #d69bd2 30%, #97d9e1 100%);
+
   font-family: 'Roboto', sans-serif;
 }
 
 h1 {
-  color: rgb(237, 236, 236);
+  color: #9BD69F;
   text-align: center;
+  text-shadow: 1px 1px 12px #2b3d2c;
 }
 
 table {
@@ -37,7 +85,7 @@ table {
   font-size: 0.9em;
   font-family: sans-serif;
   min-width: 400px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 10px 10px 20px rgba(26, 0, 91, 0.531);
 
   width: 100%;
   font-family: 'Roboto', sans-serif;
@@ -71,11 +119,12 @@ th {
 }
 
 .centered {
-  position: absolute;
-  top: 25%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }
+
 
 #app {
   font-family: 'Roboto', sans-serif;
@@ -86,15 +135,29 @@ th {
 }
 
 nav {
+  /*width is the amount of items*/
+  width: 400px;
   padding: 15px;
+  /*make the width */
+  margin: 0 auto;
+  background-color: #009879;
+  border-radius: 10px;
+  box-shadow: 10px 10px 20px rgba(4, 105, 85, 0.532);
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+
+  color: #fffbfb;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 10px;
+  margin: 0 10px;
 }
 
+
 nav a.router-link-exact-active {
-  color: #42b983;
+
+  color: #d2405d;
 }
 </style>
