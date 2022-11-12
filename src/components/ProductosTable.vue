@@ -8,6 +8,7 @@
 
 <script lang="js">
 import axios from "axios";
+import { NSpin } from "naive-ui";
 export default {
 
   name: "ProductosTable",
@@ -73,6 +74,11 @@ export default {
 
   }
 };
+
+components: {
+  NSpin
+}
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

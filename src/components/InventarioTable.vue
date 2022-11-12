@@ -27,7 +27,6 @@ export default {
             let thCantidadEnReserva = document.createElement("th");
             let thMinimo = document.createElement("th");
             let thEstado = document.createElement("th");
-
             thSku.innerHTML = "SKU";
             thCantidad.innerHTML = "Cantidad";
             thCantidadEnReserva.innerHTML = "Cantidad en reserva";

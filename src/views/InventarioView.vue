@@ -1,10 +1,10 @@
 <!-- eslint-disable prettier/prettier -->
 
 <template>
-    <div class="centered">
-        <h1><b> Inventario </b></h1>
-        <InventarioTable />
-    </div>
+  <div class="centered">
+    <h1><b> Inventario </b></h1>
+    <InventarioTable />
+  </div>
 </template>
 
 <script>
@@ -19,10 +19,5 @@ export default {
 </script>
 
 <style scoped>
-.centered-div {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+
 </style>
