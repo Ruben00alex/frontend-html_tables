@@ -3,17 +3,17 @@
 <template>
   <div class="centered">
     <h1><b> Inventario </b></h1>
-    <InventarioTable />
+    <DatabaseTable chosenTable="inventario" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import InventarioTable from "../components/InventarioTable.vue";
+import DatabaseTable from "../components/DatabaseTable.vue";
 export default {
   name: "InventarioView",
   components: {
-    InventarioTable,
+    DatabaseTable,
   },
 };
 </script>

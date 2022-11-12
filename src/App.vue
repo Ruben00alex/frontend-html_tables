@@ -45,7 +45,7 @@
 
   overflow: hidden;
   width: auto;
-  margin: 1rem auto;
+  margin: 1rem 1rem;
 }
 
 table,
@@ -60,15 +60,18 @@ tr:last-of-type {
 }
 
 html {
+  background-color: #21D4FD;
+  background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
 
-  background: linear-gradient(to bottom right, #fc00eb 10%, #00dbde 100%);
   background-size: cover;
+  /*fixed background*/
+  background-attachment: fixed;
   min-height: 100%;
 
 }
 
 body {
-
+  margin: 0;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -136,7 +139,7 @@ th {
 
 nav {
   /*width is the amount of items*/
-  width: 400px;
+  width: fit-content;
   padding: 15px;
   /*make the width */
   margin: 0 auto;
@@ -147,12 +150,14 @@ nav {
 
 nav a {
   font-weight: bold;
-
   color: #fffbfb;
   text-decoration: none;
   padding: 10px;
   border-radius: 10px;
   margin: 0 10px;
+  background-color: #030098;
+
+
 }
 
 
