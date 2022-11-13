@@ -7,12 +7,12 @@
           <NSpin :show="loading" ref="tablaSpinner" />
         </div>
         <div v-else>
-          <DatabaseTable ref="productosTable" chosenTable="productos" />
+          <DatabaseTable ref="dataTable" chosenTable="productos" />
 
         </div>
       </div>
       <div id="columnaDerecha">
-        <div class="" id="editarProducto">
+        <!-- <div class="" id="editarProducto">
           <h1><b> Editar producto </b></h1>
           <div id="productForm">
             <div id="tablaColumn">
@@ -44,7 +44,10 @@
             </div>
 
           </div>
-        </div>
+        </div> -->
+        <Suspense>
+          <EditTable ref="editTable" chosenTable="productos" />
+        </Suspense>
       </div>
     </div>
   </div>
@@ -61,12 +64,14 @@ import { NSpin } from "naive-ui";
 import { defineComponent, ref } from "vue";
 import { useMessage } from "naive-ui";
 import axios from "axios";
+import EditTable from "../components/EditTable.vue";
 
 export default {
   name: "ProductosView",
   components: {
     DatabaseTable,
 
+    EditTable,
     NButton,
     NInput,
     NForm,
@@ -79,11 +84,13 @@ export default {
     addProduct() {
       //construir la url
       let url = "http://localhost:8080/api/productos?";
-      url += "sku=" + this.formValue.sku;
-      url += "&descripcion=" + this.formValue.descripcion;
-      url += "&unidad=" + this.formValue.unidad;
-      url += "&costo=" + this.formValue.costo;
-      url += "&precio=" + this.formValue.precio;
+
+      for (let key in this.formValue) {
+        url += key + "=" + this.formValue[key] + "&";
+      }
+
+      //quitar el ultimo &
+      url = url.slice(0, -1);
 
       //hacer la peticion
       axios
@@ -92,8 +99,8 @@ export default {
           console.log(response);
         }).then(() => {
 
-          //Actualizar la tabla
-          this.$refs.productosTable.updateTable();
+          this.$refs.dataTable.updateTable();
+
         })
         .catch((error) => {
           console.log(error);
@@ -137,6 +144,8 @@ export default {
   },
   setup() {
     const formRef = ref(null);
+    //take a json and turn into formValue
+
     return {
       formRef,
       size: ref("medium"),
@@ -177,15 +186,6 @@ export default {
         ],
 
       },
-      handleValidateClick(e) {
-        e.preventDefault();
-        formRef.value?.validate((errors) => {
-          if (!errors) {
-          } else {
-            console.log(errors);
-          }
-        });
-      }
     };
   },
 
@@ -267,7 +267,7 @@ function data() {
   display: grid;
   grid-template-columns: 2fr 1fr;
   grid-template-rows: 1fr;
-  column-gap: 2rem;
+  column-gap: 4rem;
   row-gap: 1rem;
   padding: 1rem;
   height: 100%;
@@ -295,10 +295,11 @@ function data() {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 1rem;
-    row-gap: 3rem;
+    row-gap: 2rem;
     padding: 1rem;
     height: 100%;
     width: fit-content;
+    height: fit-content;
   }
 }
 </style>
