@@ -8,7 +8,7 @@
             </div>
             <!-- Make the div appear/dissapear with a button click toggle -->
             <div id="columnaDerecha">
-                <n-button @click="toggleEditTable">Editar</n-button>
+                <n-button type="primary" @click="toggleEditTable">Editar</n-button>
                 <div v-if="showEditTable">
                     <!-- EditTable element using a chosenTable of this.chosenTable -->
                     <Suspense>
@@ -63,3 +63,7 @@ export default {
 };
 
 </script>
+
+<style>
+@import "../styles/View.css";
+</style>

@@ -21,7 +21,6 @@ export default {
   },
   created() {
 
-    document.title = 'Inventario'
   }
 
 };

@@ -13,7 +13,7 @@
             </div>
             <div id="productFormRight">
                 <div id="botones">
-                    <NButton @click="addProduct" type="Primary">Actualizar</NButton>
+                    <NButton @click="addProduct" type="Primary">Añadir</NButton>
                     <NButton @click="deleteProduct" type="error">Eliminar</NButton>
                     <NButton @click="editProduct" type="tertiary">Editar</NButton>
                 </div>

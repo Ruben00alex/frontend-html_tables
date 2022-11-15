@@ -229,19 +229,4 @@ function data() {
 
 
 }
-
-/*change top-container to be 2 rows and 1 column when screen width is less than 800px*/
-@media screen and (max-width: 800px) {
-  .top-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 1rem;
-    row-gap: .5rem;
-    padding: 1rem;
-    height: 100%;
-    width: fit-content;
-    height: fit-content;
-  }
-}
 </style>
