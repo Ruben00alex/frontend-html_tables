@@ -11,6 +11,13 @@
 </template>
 
 <script>
+export default {
+    created() {
+
+        document.title = 'Inicio'
+    }
+
+}
 
 </script>
 
