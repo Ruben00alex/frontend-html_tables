@@ -1,56 +1,5 @@
 <template>
-  <div class="centered">
-    <div class="top-container">
-      <div class="">
-        <h1><b> Productos </b></h1>
-        <div v-if="loading">
-          <NSpin :show="loading" ref="tablaSpinner" />
-        </div>
-        <div v-else>
-          <DatabaseTable ref="dataTable" chosenTable="productos" />
-
-        </div>
-      </div>
-      <div id="columnaDerecha">
-        <!-- <div class="" id="editarProducto">
-          <h1><b> Editar producto </b></h1>
-          <div id="productForm">
-            <div id="tablaColumn">
-              <NForm :model="form" :rules="rules" ref="formRef">
-                <NFormItem id="sku" label="SKU">
-                  <NInput v-model:value="formValue.sku" />
-                </NFormItem>
-                <NFormItem id="descripcion" label="Descripcion" prop="descripcion">
-                  <NInput v-model:value="formValue.descripcion" />
-                </NFormItem>
-                <NFormItem label="Unidad" prop="unidad">
-                  <NInput v-model:value="formValue.unidad" />
-                </NFormItem>
-                <NFormItem label="Costo" prop="costo">
-                  <NInput v-model:value="formValue.costo" />
-                </NFormItem>
-                <NFormItem label="Precio" prop="precio">
-                  <NInput v-model:value="formValue.precio" />
-                </NFormItem>
-              </NForm>
-            </div>
-            <div id="productFormRight">
-              <div id="botones">
-                <NButton @click="addProduct" type="Primary">Actualizar</NButton>
-                <NButton @click="deleteProduct" type="error">Eliminar</NButton>
-                <NButton @click="editProduct" type="tertiary">Editar</NButton>
-
-              </div>
-            </div>
-
-          </div>
-        </div> -->
-        <Suspense>
-          <EditTable ref="editTable" chosenTable="productos" />
-        </Suspense>
-      </div>
-    </div>
-  </div>
+  <TablePage chosenTable="productos" />
 </template>
 
 <script>
@@ -65,18 +14,19 @@ import { defineComponent, ref } from "vue";
 import { useMessage } from "naive-ui";
 import axios from "axios";
 import EditTable from "../components/EditTable.vue";
+import TablePage from "../components/TablePage.vue";
 
 export default {
   name: "ProductosView",
   components: {
     DatabaseTable,
-
     EditTable,
     NButton,
     NInput,
     NForm,
     NFormItem,
     NSpin,
+    TablePage,
   },
 
 
@@ -196,6 +146,7 @@ export default {
   },
 
   created() {
+    document.title = 'Productos'
     this.loading = false;
   },
   data() {
@@ -247,15 +198,6 @@ function data() {
 
 
 
-#botones {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-
-  align-items: center;
-
-}
 
 #botones .n-button {
   margin: 2rem;
@@ -295,7 +237,7 @@ function data() {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     column-gap: 1rem;
-    row-gap: 2rem;
+    row-gap: .5rem;
     padding: 1rem;
     height: 100%;
     width: fit-content;

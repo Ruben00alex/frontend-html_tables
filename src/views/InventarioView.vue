@@ -1,23 +1,34 @@
 <!-- eslint-disable prettier/prettier -->
 
 <template>
-  <div class="centered">
-    <h1><b> Inventario </b></h1>
-    <DatabaseTable chosenTable="inventario" />
-  </div>
+
+  <TablePage chosenTable="inventario" />
 </template>
 
 <script>
 // @ is an alias to /src
-import DatabaseTable from "../components/DatabaseTable.vue";
+
+import { NSpin } from "naive-ui";
+
+import TablePage from "../components/TablePage.vue";
 export default {
   name: "InventarioView",
   components: {
-    DatabaseTable,
+
+    NSpin,
+    TablePage,
+
   },
+  created() {
+
+    document.title = 'Inventario'
+  }
+
 };
+
+
 </script>
 
 <style scoped>
-
+@import "../styles/View.css";
 </style>
