@@ -1,7 +1,7 @@
-<!-- eslint-disable prettier/prettier -->
+
 <template>
-    <p id="tablaProductos">
-    </p>
+    <div id="tablaProductos">
+    </div>
 
 </template>
 
@@ -43,7 +43,7 @@ export default {
                 let propsNames = Object.getOwnPropertyNames(datosProductos[0]);
                 console.log(propsNames);
 
-                //create table header
+                //crear table header
                 propsNames.forEach((propName) => {
                     let th = document.createElement("th");
                     th.innerHTML = propName;
@@ -83,7 +83,6 @@ export default {
             let tr = document.createElement("tr");
 
 
-            //get datosProductos propsNames:
             let propsNames = Object.getOwnPropertyNames(datosProductos[0]);
             console.log(propsNames);
 
@@ -122,19 +121,19 @@ td {
 }
 
 tr:last-of-type {
-    border-bottom: 2px solid #009884;
+    border-bottom: 2px solid hsl(172, 100%, 30%);
 }
 
 table {
 
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 0 auto;
     font-size: 0.9em;
     font-family: sans-serif;
     min-width: 400px;
-    box-shadow: 10px 10px 20px rgba(26, 0, 91, 0.531);
+    box-shadow: 10px 10px 20px hsla(257, 100%, 18%, 0.531);
 
-    width: 100%;
+    width: fit-content + 10rem;
     font-family: 'Roboto', sans-serif;
 }
 

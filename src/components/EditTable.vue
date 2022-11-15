@@ -6,8 +6,8 @@
                 <NForm :model="form" :rules="rules" ref="formRef">
                     <!-- dynamically generated <NFormItem> with <NInputs >inside, they will take the value from -->
                     <!-- the formValue object -->
-                    <NFormItem v-for="item in formValue" :key="item.label" :label="item.value" :prop="item.prop">
-                        <NInput v-model:value="formValue[item.prop]" />
+                    <NFormItem v-for="(value, key) in formValue" :key="key" :label="key">
+                        <NInput v-model:value="formValue[key]" />
                     </NFormItem>
                 </NForm>
             </div>
@@ -16,6 +16,12 @@
                     <NButton @click="addProduct" type="Primary">Actualizar</NButton>
                     <NButton @click="deleteProduct" type="error">Eliminar</NButton>
                     <NButton @click="editProduct" type="tertiary">Editar</NButton>
+                </div>
+                <div class="displayTextArea">
+                    <!-- NInput textarea dark with no text and 100% height -->
+                    <!-- <NInput id="inputTextArea" type="textarea" v-model:value="textoRespuestaJSON" :disabled="true"
+                        placeholder="Respuesta del servidor" /> -->
+                    <p>{{ textoRespuestaJSON }}</p>
 
                 </div>
             </div>
@@ -69,15 +75,20 @@ export default {
                 .post(url)
                 .then((response) => {
                     console.log(response);
+                    this.textoRespuestaJSON = JSON.stringify(response.data.message, null, 2);// aqui se muestra la respuesta del servidor en el textarea del formulario
                 }).then(() => {
 
                     //Actualizar la tabla del elemento padre del que este componente es
                     //hijo
                     this.$parent.$refs.dataTable.updateTable();
+                    //this.textoRespuestaJSON = "Producto actualizado correctamente";
 
                 })
                 .catch((error) => {
                     console.log(error);
+                    //this.textoRespuestaJSON = "Error al actualizar el producto";
+                    this.textoRespuestaJSON = JSON.stringify(error.response.data.message, null, 2);
+
                 });
 
 
@@ -166,6 +177,7 @@ export default {
         return {
             formRef,
             size: ref("medium"),//ref() is a function that returns a reactive object, a reactive object is a object that can be used in the template for example <NButton :size="size" />
+            textoRespuestaJSON: ref("Respuesta del servidor."),
             formValue: ref(formValue),
             rules,
             handleValidateClick(e) {
@@ -182,11 +194,6 @@ export default {
     },
 
 
-    updateProduct() {
-        console.log("updateProduct");
-        console.log(descripcion);
-    },
-
     created() {
         this.loading = false;
     },
@@ -199,12 +206,7 @@ export default {
     data() {
         return {
             loading: true,
-            form: {
-                descripcion: "",
-                unidad: "",
-                costo: "",
-                precio: "",
-            },
+
         };
     },
 };
@@ -218,75 +220,59 @@ export default {
 </script>
 
 <style scoped>
-/* make elements with class centered and with id = "editarProducto" to be */
-#productForm {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr;
-    column-gap: 1rem;
-
-    height: 100%;
-    background-color: #7FFFD4;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.15);
-
-}
-
-
-
 #botones {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    height: 100%;
+
+    height: fit-content;
 
     align-items: center;
 
 }
 
-#botones .n-button {
-    margin: 2rem;
+#botones button {
+    margin: 0.625rem;
 }
 
+/* 2nd element inside of #botones will have top margin auto */
+#botones button:nth-child(3) {
+    margin-bottom: auto;
+}
 
-.top-container {
-    /* div with 2 columns, the first is 2/3 and 2nd is 1/3*/
+#productFormRight {
+    /* grid with 2 rows and 1 column */
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: 1fr;
-    column-gap: 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr;
+
     row-gap: 1rem;
-    padding: 1rem;
-    height: 100%;
-    width: fit-content;
+    /* 1st element will have top margin auto */
+
 
 }
 
-#columnaDerecha {
-    /*align content vertically*/
+.displayTextArea>* {
+    height: 100%;
+    margin: auto 0;
+
+}
+
+.displayTextArea {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: fit-content;
-    width: fit-content;
     align-items: center;
-
-
-
 }
 
-/*change top-container to be 2 rows and 1 column when screen width is less than 800px*/
-@media screen and (max-width: 800px) {
-    .top-container {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr;
-        column-gap: 1rem;
-        row-gap: 3rem;
-        padding: 1rem;
-        height: 100%;
-        width: fit-content;
-    }
+.displayTextArea p {
+    margin: auto 0;
+    height: 100%;
+    width: 25ch;
+}
+
+.inputTextArea {
+    height: 100%;
+    width: 100%;
+    background-color: #000;
 }
 </style>
