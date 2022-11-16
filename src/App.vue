@@ -7,7 +7,16 @@
       <router-link to="/inventario">Inventario</router-link>
       <router-link to="/clientes">Clientes</router-link>
     </nav>
-    <n-button id="botonLogin" type="primary" @click="signin">Iniciar sesión</n-button>
+    <n-button id="botonLogin" type="primary" @click="showModal = true">Login</n-button>
+
+    <Teleport to="body">
+      <!-- use the modal component, pass in the prop -->
+      <LoginComponent :show="showModal" @close="showModal = false">
+        <template #header>
+          <h3>Login</h3>
+        </template>
+      </LoginComponent>
+    </Teleport>
   </div>
 
 
@@ -18,13 +27,34 @@
 
 <script>
 import { NButton } from 'naive-ui'
+import LoginComponent from './components/LoginComponent.vue'
 
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+
+/* add icons to the library */
+library.add(faUserSecret)
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 export default {
   name: 'App',
   components: {
-    NButton
-  }
+    NButton,
+    LoginComponent,
+
+  },
+  data() {
+    return {
+      showModal: false
+    }
+  },
 }
 
 
