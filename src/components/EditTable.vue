@@ -61,7 +61,7 @@ export default {
 
         addProduct() {
             //construir la url
-            let url = "http://localhost:8080/api/" + this.chosenTable + "?";
+            let url = "https://localhost:8080/api/" + this.chosenTable + "?";
 
             for (let key in this.formValue) {
                 url += key + "=" + this.formValue[key] + "&";
@@ -80,6 +80,7 @@ export default {
 
                     //Actualizar la tabla del elemento padre del que este componente es
                     //hijo
+                    console.log(this.$parent.$refs.dataTable);
                     this.$parent.$refs.dataTable.updateTable();
                     //this.textoRespuestaJSON = "Producto actualizado correctamente";
 
@@ -95,7 +96,7 @@ export default {
         },
         deleteProduct() {
             axios
-                .delete("http://localhost:8080/api/productos/" + this.formValue.id)
+                .delete("https://localhost:8080/api/productos/" + this.formValue.id)
                 .then((result) => {
                     this.message.success("Producto eliminado");
                 })
@@ -105,7 +106,7 @@ export default {
         },
         editProduct() {
             axios
-                .get("http://localhost:8080/api/productos/" + this.formValue.id)
+                .get("https://localhost:8080/api/productos/" + this.formValue.id)
                 .then((result) => {
                     this.formValue.descripcion = result.data.descripcion;
                     this.formValue.unidad = result.data.unidad;
@@ -122,7 +123,7 @@ export default {
     async setup(props) {
         let chosenTable = props.chosenTable;
 
-        let response = await axios.get("http://localhost:8080/api/" + chosenTable);
+        let response = await axios.get("https://localhost:8080/api/" + chosenTable);
 
         let result = response.data;
 
@@ -200,7 +201,6 @@ export default {
     mounted() {
         this.loading = false;
         console.log("mounted");
-        console.log(this)
 
     },
     data() {
