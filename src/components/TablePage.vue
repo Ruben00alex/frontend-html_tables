@@ -2,7 +2,7 @@
     <div class="centered">
         <div class="top-container">
             <div class="tabla">
-                <h1><b> {{ this.chosenTable.charAt(0).toUpperCase() + this.chosenTable.slice(1) }} </b></h1>
+                <h1><b> {{ this.$parent.loggedUser }}</b></h1>
                 <!-- DatabaseTable element using a chosenTable of this.chosenTable -->
                 <DatabaseTable ref="dataTable" :chosenTable="chosenTable" />
             </div>

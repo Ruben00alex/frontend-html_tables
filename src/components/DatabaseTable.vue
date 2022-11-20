@@ -14,6 +14,19 @@ import { NSpin } from "naive-ui";
 const loading = ref(true);
 let chosenTable = props.chosenTable;
 
+let tokenStr;
+//verify that local storage has a token
+if (localStorage.getItem("userState") == null) {
+    //if not, redirect to login
+    tokenStr = "";
+    //redirect to login
+    window.location.href = "/#/login";
+
+
+} else {
+    tokenStr = JSON.parse(localStorage.getItem("userState")).token;
+}
+
 //in defineExpose, we can define the methods that we want to expose to the parent component
 defineExpose({
     loading,
@@ -42,7 +55,7 @@ function updateTable() {
     console.log("Updating table");
     let url = "https://localhost:8080/api/";
     url += chosenTable;
-    axios.get(url).then((result) => {
+    axios.get(url, { headers: { "Authorization": `Bearer ${tokenStr}` } }).then((result) => {
         let datosProductos = result.data;
 
         let tablaProductos = document.getElementById("tablaProductos"); //obtener la referencia a la tabla
@@ -90,7 +103,11 @@ function createTable() {
 
     let url = "https://localhost:8080/api/";
     url += chosenTable;
-    axios.get(url).then((result) => {
+    //send get request to url with an authorization header
+    console.log("url:" + url);
+    console.log(tokenStr);
+
+    axios.get(url, { headers: { "Authorization": `Bearer ${tokenStr}` } }).then((result) => {
         let datosProductos = result.data;
         //Aqui se crea la tabla
         let tablaProductos = document.getElementById("tablaProductos");

@@ -8,13 +8,16 @@
                     </div>
 
                     <div class="modal-body">
-                        <font-awesome-icon icon="fa-solid fa-user-secret" />
-                        <NInput v-model="username" placeholder="Usuario" />
+
+                        <NInput type="text" v-model:value="email" placeholder="Email" />
+                        <NInput v-model:value="this.password" placeholder="Contraseña" type="password" />
                     </div>
                     <div class="modal-footer">
-                        <NInput v-model="password" placeholder="Contraseña" type="password" />
+                        <p>{{ message }}</p>
+                        <button class="modal-default-button" @click="login();">
+                            Login
+                        </button>
                     </div>
-                    <button class="modal-default-button" @click="$emit('close'); login()">OK</button>
                 </div>
             </div>
         </div>
@@ -24,7 +27,9 @@
 
 
 <script>
-import { NInput, NButton } from 'naive-ui'
+import { NInput, NButton, NForm, NFormItem } from "naive-ui";
+import axios from 'axios'
+
 export default {
     name: "LoginComponent",
     props: {
@@ -32,14 +37,52 @@ export default {
     },
     components: {
         NInput,
-        NButton
-
+        NButton,
+        NForm,
+        NFormItem
     },
     methods: {
-        login() {
-            console.log("login")
+        async login() {
+            let url = "https://localhost:8080/api/login?email=" + this.email + "&password=" + this.password;
+            let self = this;// aqui se guarda el this de la funcion porque dentro de la funcion axios no se puede usar this, pues referencia a otra cosa
+            axios.post(url)
+                .then(function (response) {
+                    //retrieve token from response and save it in local storage
+                    self.message = response.data.message;
+                    // localStorage.setItem("token", response.data.token);
+                    // localStorage.setItem("logged", true);
+                    // localStorage.setItem("loggedUser", response.data.user);
+                    console.log(response)
+                    let loggedUser = response.data.loggedUser;
+                    localStorage.setItem("userState", loggedUser);
+
+                    alert("Login correcto");
+                    self.$emit("close");
+
+
+
+                    self.$parent.loggedIn = true;
+                    console.log(self.$parent.loggedIn);
+                    window.location.href = "/";
+
+                })
+                .catch(function (error) {
+                    self.message = error.response.data.message;
+                    alert(self.message);
+                    console.log(error);
+                });
+
         }
     },
+    data() {
+        return {
+            email: "",
+            password: "",
+            message: "Introduce tus credenciales"
+        }
+    }
+
+
 }
 
 </script>
@@ -85,6 +128,10 @@ export default {
     color: azure;
 }
 
+.modal-body>* {
+    margin: .25rem 0;
+}
+
 .modal-default-button {
     float: right;
     margin: 1rem;
@@ -111,5 +158,11 @@ export default {
 .modal-leave-to .modal-container {
     -webkit-transform: scale(1.1);
     transform: scale(1.1);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 </style>

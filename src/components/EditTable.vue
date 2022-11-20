@@ -41,6 +41,23 @@ import { defineComponent, ref } from "vue";
 import { useMessage } from "naive-ui";
 import axios from "axios";
 
+
+let tokenStr;
+//verify that local storage has a token
+if (localStorage.getItem("userState") == null) {
+    //if not, redirect to login
+    tokenStr = "";
+    //redirect to login
+    window.location.href = "/#/login";
+
+
+} else {
+    tokenStr = JSON.parse(localStorage.getItem("userState")).token;
+}
+
+
+
+
 export default {
 
 
@@ -72,7 +89,7 @@ export default {
 
             //hacer la peticion
             axios
-                .post(url)
+                .post(url, {}, { headers: { "Authorization": `Bearer ${tokenStr}` } })
                 .then((response) => {
                     console.log(response);
                     this.textoRespuestaJSON = JSON.stringify(response.data.message, null, 2);// aqui se muestra la respuesta del servidor en el textarea del formulario
@@ -95,26 +112,48 @@ export default {
 
         },
         deleteProduct() {
+            //construir la url
+            let url = "https://localhost:8080/api/" + this.chosenTable + "?";
+            console.log(this.formValue);
+            let self = this;
             axios
-                .delete("https://localhost:8080/api/productos/" + this.formValue.id)
+                .delete("https://localhost:8080/api/productos/" + this.formValue.sku, { headers: { "Authorization": `Bearer ${tokenStr}` } })
                 .then((result) => {
-                    this.message.success("Producto eliminado");
+                    self.textoRespuestaJSON = JSON.stringify(result.data.message, null, 2);// aqui se muestra la respuesta del servidor en el textarea del formulario
+
+                    console.log("Aqui se muestra la respuesta del servidor en el textarea del formulario");
+                    self.$parent.$refs.dataTable.updateTable();
                 })
                 .catch((error) => {
-                    this.message.error("Error al eliminar producto");
+                    console.log(error);
+                    this.textoRespuestaJSON = JSON.stringify(error.data, null, 2);
+
                 });
         },
         editProduct() {
+            //construir la url para hacer la peticion tipo PUT
+            let url = "https://localhost:8080/api/" + this.chosenTable + "/"
+                + this.formValue.sku;
+            //hacer la peticion
             axios
-                .get("https://localhost:8080/api/productos/" + this.formValue.id)
-                .then((result) => {
-                    this.formValue.descripcion = result.data.descripcion;
-                    this.formValue.unidad = result.data.unidad;
-                    this.formValue.costo = result.data.costo;
-                    this.formValue.precio = result.data.precio;
+                .put(url, {}, { headers: { "Authorization": `Bearer ${tokenStr}` } })
+                .then((response) => {
+                    console.log(response);
+                    this.textoRespuestaJSON = JSON.stringify(response.data.message, null, 2);// aqui se muestra la respuesta del servidor en el textarea del formulario
+                }).then(() => {
+
+                    //Actualizar la tabla del elemento padre del que este componente es
+                    //hijo
+                    console.log(this.$parent.$refs.dataTable);
+                    this.$parent.$refs.dataTable.updateTable();
+                    //this.textoRespuestaJSON = "Producto actualizado correctamente";
+
                 })
                 .catch((error) => {
-                    this.message.error("Error al editar producto");
+                    console.log(error);
+                    //this.textoRespuestaJSON = "Error al actualizar el producto";
+                    this.textoRespuestaJSON = JSON.stringify(error.response.data.message, null, 2);
+
                 });
         },
 
@@ -122,8 +161,8 @@ export default {
 
     async setup(props) {
         let chosenTable = props.chosenTable;
-
-        let response = await axios.get("https://localhost:8080/api/" + chosenTable);
+        let tokenStr = JSON.parse(localStorage.getItem("userState")).token;
+        let response = await axios.get("https://localhost:8080/api/" + chosenTable, { headers: { "Authorization": `Bearer ${tokenStr}` } });
 
         let result = response.data;
 

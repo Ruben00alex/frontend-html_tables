@@ -6,19 +6,25 @@
       <router-link to="/productos">Productos</router-link>
       <router-link to="/inventario">Inventario</router-link>
       <router-link to="/clientes">Clientes</router-link>
+      <!-- carrito -->
+      <router-link to="/carrito">Carrito</router-link>
+      <router-link to="/signin">Signup</router-link>
     </nav>
-    <n-button id="botonLogin" type="primary" @click="showModal = true">Login</n-button>
+    <!-- if logedIn is true, show logout button, else show login button -->
+    <h2 v-if="loggedIn">Bienvenido {{ loggedUser.nombre }}!</h2>
+    <a v-else href="#/signin">test</a>
+    <n-button v-if="loggedIn" @click="logout">Logout</n-button>
+    <n-button v-else id="botonLogin" type="primary" @click="showModal = true">Login</n-button>
 
     <Teleport to="body">
       <!-- use the modal component, pass in the prop -->
       <LoginComponent :show="showModal" @close="showModal = false">
         <template #header>
-          <h3>Login</h3>
+          <h3>Login </h3>
         </template>
       </LoginComponent>
     </Teleport>
   </div>
-
 
 
   <router-view />
@@ -27,21 +33,33 @@
 
 <script>
 import { NButton } from 'naive-ui'
-import LoginComponent from './components/LoginComponent.vue'
 
 
 export default {
   name: 'App',
   components: {
     NButton,
-    LoginComponent,
 
   },
   data() {
     return {
-      showModal: false
+      showModal: false,
+      loggedUser: localStorage.getItem("userState") != null ? JSON.parse(localStorage.getItem("userState")) : null,
+      loggedIn: JSON.parse(localStorage.getItem("userState")) != null ? true : false,
     }
   },
+  setup() {
+
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("userState");
+      this.loggedIn = false;
+
+      this.$router.push("/");
+
+    }
+  }
 }
 
 
@@ -61,12 +79,9 @@ export default {
 
 }
 
-
 .centered {
-  position: relative;
-  display: grid;
-  justify-content: center;
-  align-items: center;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 
@@ -168,21 +183,5 @@ nav a:hover {
 nav a.router-link-exact-active {
 
   color: hsl(61, 100%, 60%);
-}
-
-
-/*change top-container to be 2 rows and 1 column when screen width is less than 800px*/
-@media screen and (max-width: 800px) {
-  .top-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    column-gap: 1rem;
-    row-gap: .5rem;
-    padding: 1rem;
-    height: 100%;
-    width: fit-content;
-    height: fit-content;
-  }
 }
 </style>
