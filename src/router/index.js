@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import InventarioView from "../views/InventarioView.vue";
 import ClienteView from "../views/ClienteView.vue";
+import CarritoView from "../views/CarritoView.vue";
+
 const routes = [
   {
     path: "/",
@@ -25,6 +27,29 @@ const routes = [
     name: "clientes",
     component: ClienteView,
   },
+  //carrito:
+  {
+    path: "/carrito",
+    name: "carrito",
+    component: CarritoView,
+  },
+  //Login:
+  {
+    path: "/login",
+    name: "login",
+    component: function () {
+      return import("../views/LoginView.vue");
+    },
+  },
+  //signin:
+  {
+    path: "/signin",
+    name: "signin",
+    component: function () {
+      return import("../views/SigninView.vue");
+    },
+  }
+
 ];
 
 const router = createRouter({
