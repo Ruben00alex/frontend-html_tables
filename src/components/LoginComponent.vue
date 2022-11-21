@@ -129,7 +129,7 @@ export default {
 }
 
 .modal-body>* {
-    margin: .25rem 0;
+    margin: 1rem 0;
 }
 
 .modal-default-button {
@@ -163,6 +163,6 @@ export default {
 .modal-footer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: left;
 }
 </style>
