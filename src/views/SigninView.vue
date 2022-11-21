@@ -9,13 +9,16 @@
                 <NInput v-model:value="form.rfc" />
             </NFormItem>
             <NFormItem label="Username">
-                <NInput v-model:value="username" />
+                <NInput v-model:value="form.username" />
+            </NFormItem>
+            <NFormItem label="Email">
+                <NInput v-model:value="form.email" />
             </NFormItem>
             <NFormItem label="Password">
-                <NInput v-model:value="password" type="password" />
+                <NInput v-model:value="form.password" type="password" />
             </NFormItem>
 
-            <NButton type="primary" @click="login();">Sign in</NButton>
+            <NButton type="primary" @click="signup();">Sign up</NButton>
         </NForm>
 
 
@@ -29,28 +32,30 @@
 
 import { NInput, NButton, NForm, NFormItem } from "naive-ui";
 import { defineComponent, ref } from "vue";
-
+import axios from "axios";
 const form = ref({
     rfc: "",
     username: "",
     password: "",
+    email: ""
 });
 
 
 
 
-const signIn = () => {
+const signup = () => {
+
     //send a post request to the backend
-    axios.post("http://localhost:3000/api/auth/signin", {
-        rfc: form.value.rfc,
-        username: form.value.username,
-        password: form.value.password,
-    })
+    //example of url: localhost:8080/api/clientes?nombre=Alex&email=email@email.com&rfc=1234
+
+    //construct the url
+    let url = "https://localhost:8080/api/clientes?nombre=" + form.value.username + "&email=" + form.value.email + "&rfc=" + form.value.rfc + "&password=" + form.value.password;
+
+    axios.post(url)
         .then((response) => {
             //if the response is ok, then the user is logged in
             if (response.status === 200) {
-                //save the token in the local storage
-                localStorage.setItem("token", response.data.accessToken);
+                alert("Usuario registrado");
                 //redirect to the home page
                 window.location.href = "/";
             }
@@ -58,6 +63,7 @@ const signIn = () => {
         .catch((error) => {
             //if the response is not ok, then the user is not logged in
             if (error.response.status === 401) {
+                alert(error.response.data);
                 message.error("Wrong username or password");
             }
         });
