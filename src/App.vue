@@ -3,6 +3,8 @@
   <div class="navBar">
     <nav>
       <router-link to="/">Inicio</router-link>
+
+      <router-link to="/tabla">Tabla</router-link>
       <router-link to="/productos">Productos</router-link>
       <router-link to="/inventario">Inventario</router-link>
       <router-link to="/clientes">Clientes</router-link>

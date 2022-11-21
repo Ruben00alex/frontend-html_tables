@@ -48,7 +48,16 @@ const routes = [
     component: function () {
       return import("../views/SigninView.vue");
     },
-  }
+  },
+
+  //tabla:
+  {
+    path: "/tabla",
+    name: "tabla",
+    component: function () {
+      return import("../views/TablaView.vue");
+    },
+  },
 
 ];
 
