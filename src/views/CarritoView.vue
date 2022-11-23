@@ -3,11 +3,11 @@
     <h2>Carrito</h2>
     <div class="centered-grid">
         <div class="grid-layout">
-            <ProductCard v-for="product in products" :key="product.sku" :product="product" :editable="false" />
+            <ProductCard v-for="product in products" :key="product.unidad" :product="product" :editable="false"
+                @update="updateProducts" />
         </div>
     </div>
-
-
+    <ShoppingCart />
 
 </template>
 
@@ -15,6 +15,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 let tokenStr;
+let chosenTable = ref("productos");
 if (localStorage.getItem("userState") == null) {
     window.location.href = "/#/login";
 } else {
@@ -26,13 +27,19 @@ console.log(tokenStr);
 
 const products = ref([]);
 
-onMounted(async () => {
+const updateProducts = async () => {
     //get the products from the backend
     const response = await axios.get("https://localhost:8080/api/productos", { headers: { "Authorization": `Bearer ${tokenStr}` } });
     console.log(response.data);
     //save the products in the products variable
     products.value = response.data;
-});
+}
+
+const testingEmits = () => {
+    console.log("testing emits");
+}
+
+onMounted(updateProducts);
 
 
 </script>
