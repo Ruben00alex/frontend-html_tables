@@ -1,29 +1,33 @@
 <!-- eslint-disable prettier/prettier -->
 
 <template>
-    <div class="centered">
-        <h1><b> Inventario </b></h1>
-        <InventarioTable />
-    </div>
+
+  <TablePage chosenTable="inventario" />
 </template>
 
 <script>
 // @ is an alias to /src
-import InventarioTable from "../components/InventarioTable.vue";
+
+import { NSpin } from "naive-ui";
+
+import TablePage from "../components/TablePage.vue";
 export default {
-    name: "InventarioView",
-    components: {
-        InventarioTable,
-    },
+  name: "InventarioView",
+  components: {
+
+    NSpin,
+    TablePage,
+
+  },
+  created() {
+
+  }
+
 };
+
+
 </script>
 
 <style scoped>
-.centered-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-
-}
+@import "../styles/View.css";
 </style>
