@@ -20,7 +20,7 @@
 </template>
 
 
-<script lang="ts" setup>
+<script  setup>
 import { NButton } from "naive-ui";
 import { computed } from "vue";
 import axios from "axios";
@@ -28,11 +28,12 @@ import axios from "axios";
 //imgUrl is a random tech image from unsplash
 const imgUrl = "https://source.unsplash.com/1600x900/?tech";
 
+const emit = defineEmits(['update']);
 
 function getRandomNumber() {
     return (Math.floor(Math.random() * 10));
 }
-const addToCart = (productSKU) => {
+const addToCart = async (productSKU) => {
     //clienteRFC = JSON.parse(localStorage.getItem("userState")).rfc;
     let clienteRFC = JSON.parse(localStorage.getItem("userState")).rfc;
     let tokenStr = JSON.parse(localStorage.getItem("userState")).token;
@@ -40,23 +41,23 @@ const addToCart = (productSKU) => {
     //send a post request to the backend
     //example of url: localhost:8080/api/carrito?sku=1234&cantidad=1
     //construct the url
+    let self = this;
     let url = "https://localhost:8080/api/carrito?sku=" + productSKU + "&cantidad=1" + "&clienteRFC=" + clienteRFC;
-    axios.post(url, { headers: { "Authorization": `Bearer ${tokenStr}` } })
-        .then((response) => {
-            //if the response is ok, then the user is logged in
-            if (response.status === 200) {
-                alert("Producto agregado al carrito");
-                //refresh dom to update the cart
-                window.location.reload();
+    let response = await axios.post(url, { headers: { "Authorization": `Bearer ${tokenStr}` } });
 
-            }
-        })
-        .catch((error) => {
-            //if the response is not ok, then the user is not logged in
-            if (error.response.status === 401) {
-                alert(error.response.data);
-            }
-        });
+    //if the response is ok, then the user is logged in
+    if (response.status === 200) {
+        // alert("Producto agregado al carrito");
+
+        emit("update");
+        //refresh key of the component
+
+
+    }
+    else {
+        alert("Error al agregar producto al carrito");
+    }
+
 };
 
 //define props

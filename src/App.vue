@@ -1,35 +1,53 @@
 <template>
-  <title>Sitio e-commerce </title>
-  <div class="navBar">
-    <nav>
-      <router-link to="/">Inicio</router-link>
+  <div class="wrapper">
+    <title>Sitio e-commerce </title>
+    <div class="navBar">
+      <div id="firstColumn">
+        <nav>
+          <router-link to="/">Inicio</router-link>
 
-      <router-link to="/tabla">Tabla</router-link>
-      <router-link to="/productos">Productos</router-link>
-      <router-link to="/inventario">Inventario</router-link>
-      <router-link to="/clientes">Clientes</router-link>
-      <!-- carrito -->
-      <router-link to="/carrito">Carrito</router-link>
-      <router-link to="/signin">Signup</router-link>
-    </nav>
-    <!-- if logedIn is true, show logout button, else show login button -->
-    <h2 v-if="loggedIn">Bienvenido {{ loggedUser.nombre }}!</h2>
-    <a v-else href="#/signin">test</a>
-    <n-button v-if="loggedIn" @click="logout">Logout</n-button>
-    <n-button v-else id="botonLogin" type="primary" @click="showModal = true">Login</n-button>
+          <router-link to="/tabla">Tabla</router-link>
+          <!-- carrito -->
+          <router-link to="/carrito">Carrito</router-link>
+          <router-link to="/signin">Signup</router-link>
+        </nav>
+      </div>
+      <!-- if logedIn is true, show logout button, else show login button -->
+      <div id="secondColumn">
+        <div v-if="loggedIn">
 
-    <Teleport to="body">
-      <!-- use the modal component, pass in the prop -->
-      <LoginComponent :show="showModal" @close="showModal = false">
-        <template #header>
-          <h3>Login </h3>
-        </template>
-      </LoginComponent>
-    </Teleport>
+          <div class="welcomeCart">
+            <n-button @click="showModalCart = true">Carrito</n-button>
+            <h2>Bienvenido {{ loggedUser.nombre }}!</h2>
+          </div>
+
+          <n-button @click="logout">Logout</n-button>
+        </div>
+
+        <div v-else>
+          <a href="#/signin">test</a>
+          <n-button id="botonLogin" type="primary" @click="showModal = true">Login</n-button>
+        </div>
+        <Teleport to="body">
+          <!-- use the modal component, pass in the prop -->
+          <LoginComponent :show="showModal" @close="showModal = false">
+            <template #header>
+              <h3>Login </h3>
+            </template>
+          </LoginComponent>
+        </Teleport>
+
+        <Teleport to="body">
+
+          <!-- use the modal component, pass in the prop -->
+          <ShoppingCart :show="showModalCart" @close="showModalCart = false" :key="showModalCart" />
+        </Teleport>
+      </div>
+    </div>
+
+
+    <router-view />
   </div>
-
-
-  <router-view />
 </template>
 
 
@@ -46,6 +64,7 @@ export default {
   data() {
     return {
       showModal: false,
+      showModalCart: false,
       loggedUser: localStorage.getItem("userState") != null ? JSON.parse(localStorage.getItem("userState")) : null,
       loggedIn: JSON.parse(localStorage.getItem("userState")) != null ? true : false,
     }
@@ -72,12 +91,17 @@ export default {
 .navBar {
   position: relative;
   width: auto;
-  margin: 1rem 1rem;
+  margin: 1rem 3rem;
   /* Display elements next to each other */
-  display: flex;
+  display: grid;
+  grid-template-columns: 8fr 1fr;
+
   /* Align items to the center */
+  align-items: center;
   /* Justify content to the center */
   justify-content: center;
+  /*space between elements */
+  justify-content: space-between;
 
 }
 
@@ -185,5 +209,29 @@ nav a:hover {
 nav a.router-link-exact-active {
 
   color: hsl(61, 100%, 60%);
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.welcomeCart {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.welcomeCart>h2 {
+  margin: 0;
+  padding: 0;
+  /*single line*/
+  white-space: nowrap;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <Transition name="modal">
+    <Transition name="modalLogin">
         <div v-if="show" class="modal-mask">
             <div class="modal-wrapper">
                 <div class="modal-container">
@@ -14,10 +14,12 @@
                     </div>
                     <div class="modal-footer">
                         <p>{{ message }}</p>
+
                         <button class="modal-default-button" @click="login();">
                             Login
                         </button>
                     </div>
+                    <p>Si no tienes cuenta, <a href="#/signin" @click='this.$emit("close")'> Registrate</a></p>
                 </div>
             </div>
         </div>

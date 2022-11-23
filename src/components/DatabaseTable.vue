@@ -1,6 +1,14 @@
 
 <template>
+
+    <div v-if="loading" class="loading">
+        <n-spin :size="30" :show="loading">
+            <div class="loading-text">Loading...</div>
+        </n-spin>
+    </div>
+
     <div id="tablaProductos">
+
     </div>
 
 </template>
@@ -9,7 +17,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import axios from "axios";
+import axios from 'axios';
 import { NSpin } from "naive-ui";
 const loading = ref(true);
 let chosenTable = props.chosenTable;
@@ -42,59 +50,57 @@ const props = defineProps({
     }
 });//props is an object that contains all the props that we defined in defineProps
 
-onMounted(() => {
-    loading.value = false;
+onMounted(async () => {
     console.log(chosenTable);
 
-    createTable();
+    await updateTable();
     console.log("Table created");
 });//onMounted is a lifecycle hook that is called when the component is mounted
 
 //Funcion para actualizar la tabla
-function updateTable() {
+async function updateTable() {
     console.log("Updating table");
     let url = "https://localhost:8080/api/";
     url += chosenTable;
-    axios.get(url, { headers: { "Authorization": `Bearer ${tokenStr}` } }).then((result) => {
-        let datosProductos = result.data;
+    let result = await axios.get(url, { headers: { "Authorization": `Bearer ${tokenStr}` } });
 
-        let tablaProductos = document.getElementById("tablaProductos"); //obtener la referencia a la tabla
+    let datosProductos = result.data;
 
-        //tabla es un elemento creado de tipo table dentro de tablaProductos
-        let tabla = tablaProductos.children[0];
-        //limpiar la tabla
-        tabla.innerHTML = "";
+    console.log(datosProductos);
+    let tablaProductos = document.getElementById("tablaProductos"); //obtener la referencia a la tabla
 
 
-        let thead = document.createElement("thead");
-        let tr = document.createElement("tr");
+    let tabla = document.createElement("table");
+    let thead = document.createElement("thead");
+    let tr = document.createElement("tr");
 
+    //limpiar la tabla
+    tablaProductos.innerHTML = "";
+    let propsNames = Object.getOwnPropertyNames(datosProductos[0]);
 
-        //get datosProductos propsNames:
-        let propsNames = Object.getOwnPropertyNames(datosProductos[0]);
-        console.log(propsNames);
-
-        //crear table header
-        propsNames.forEach((propName) => {
-            let th = document.createElement("th");
-            th.innerHTML = propName;
-            tr.appendChild(th);
-        });
-
-        thead.appendChild(tr);
-        tabla.appendChild(thead);
-
-
-        //add data from datosProductos to tabla
-        datosProductos.forEach((producto) => {
-            let row = tabla.insertRow();
-
-            for (let i = 0; i < propsNames.length; i++) {
-                let cell = row.insertCell();
-                cell.innerHTML = producto[propsNames[i]];
-            }
-        });
+    //create table header
+    propsNames.forEach((propName) => {
+        let th = document.createElement("th");
+        th.innerHTML = propName;
+        tr.appendChild(th);
     });
+
+    thead.appendChild(tr);
+    tabla.appendChild(thead);
+    tablaProductos.appendChild(tabla);
+
+    //add data from datosProductos to tabla
+    datosProductos.forEach((producto) => {
+        let row = tabla.insertRow();
+
+        for (let i = 0; i < propsNames.length; i++) {
+            let cell = row.insertCell();
+            cell.innerHTML = producto[propsNames[i]];
+        }
+    });
+
+    loading.value = false;
+
 
 }
 
@@ -150,7 +156,7 @@ function createTable() {
 table,
 th,
 td {
-    padding: 10px;
+    padding: .5rem;
     text-align: center;
 
 }
@@ -165,18 +171,21 @@ table {
     margin: 0 auto;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+
     box-shadow: 10px 10px 20px hsla(257, 100%, 18%, 0.531);
 
     width: fit-content;
+    max-width: 100%;
     font-family: 'Roboto', sans-serif;
+
+    /*vw es una unidad de medida relativa al ancho de la ventana del navegador*/
+    /* se usa para que la tabla se adapte al tamaño de la ventana del navegador*/
 }
 
 td {
 
     font-size: 1.2em;
 
-    padding: 12px 15px;
     text-align: center;
     max-width: 30ch;
     overflow: hidden;
@@ -207,6 +216,14 @@ th {
     background-color: #009879;
     color: #ffffff;
     text-align: center;
+}
+
+#tablaProductos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 </style>
   
